@@ -34,7 +34,7 @@ public class QuizManger {
     public QuizManger(Context context){
         mContext = context;
         mRequestQueue = VolleySingleton.getInstance().getRequestQueue();
-        url = "https://opentdb.com/api.php?amount=10&category=18&difficulty=easy&type=boolean";
+        url = "https://opentdb.com/api.php?amount=10&type=boolean";
 
 //        getQuizQuestion();
     }

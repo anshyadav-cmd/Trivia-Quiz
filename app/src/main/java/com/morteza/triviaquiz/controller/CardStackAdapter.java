@@ -11,6 +11,8 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
 import com.morteza.triviaquiz.R;
 import com.morteza.triviaquiz.model.QuizQuestion;
 import com.morteza.triviaquiz.view.QuizViewHolder;
@@ -54,6 +56,10 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
                     holder.getTrueBtn().setBackgroundColor(mContext.getResources().getColor((R.color.corr_ans)));
                 }else {
                     holder.getTrueBtn().setBackgroundColor(mContext.getResources().getColor((R.color.false_ans)));
+                    YoYo.with(Techniques.Shake)
+                            .duration(500)
+                            .repeat(0)
+                            .playOn(holder.getTrueBtn());
                 }
             }
         });
@@ -64,6 +70,10 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
                     holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.corr_ans));
                 } else {
                     holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.false_ans));
+                    YoYo.with(Techniques.Shake)
+                            .duration(500)
+                            .repeat(0)
+                            .playOn(holder.getFalseBtn());
                 }
             }
         });
