@@ -7,4 +7,23 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+
+    // Random Light color
+    <color name="l_ran1">#fbf8cc</color>
+    <color name="l_ran2">#fde4cf</color>
+    <color name="l_ran3">#ffcfd2</color>
+    <color name="l_ran4">#f1c0e8</color>
+    <color name="l_rand5">#cfbaf0</color>
+    <color name="l_rand6">#a3c4f3</color>
+    <color name="l_rand7">#90dbf4</color>
+    <color name="l_rand8">#8eecf5</color>
+    <color name="l_rand9">#b9fbc0</color>
+    <color name="l_rand10">#ffafcc</color>
+
+    //
+    <color name="false_ans">#f94144</color>
+    <color name="corr_ans">#70e000</color>
+    
+
+
 </resources>
