@@ -1,5 +1,6 @@
 package com.morteza.triviaquiz.controller;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
 import android.view.LayoutInflater;
@@ -8,10 +9,10 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.morteza.triviaquiz.R;
+import com.morteza.triviaquiz.model.QuizQuestion;
 import com.morteza.triviaquiz.view.QuizViewHolder;
 
 import java.security.SecureRandom;
@@ -19,7 +20,7 @@ import java.util.List;
 
 public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     private Context mContext;
-    private List<String> mQuizName;
+    private List<QuizQuestion> mQuizQuestions;
     private LayoutInflater mLayoutInflater;
 
     private int colors[] = {R.color.l_ran1, R.color.l_ran2, R.color.l_ran3, R.color.l_ran4,
@@ -27,9 +28,9 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
             R.color.l_rand9, R.color.l_rand10};
     private SecureRandom mSecureRandom;
 
-    public CardStackAdapter(Context context, List<String> quizName){
+    public CardStackAdapter(Context context, List<QuizQuestion> quizName){
         mContext = context;
-        mQuizName = quizName;
+        mQuizQuestions = quizName;
         mLayoutInflater = LayoutInflater.from(context);
         mSecureRandom = new SecureRandom();
     }
@@ -42,27 +43,35 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(@NonNull QuizViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull QuizViewHolder holder, @SuppressLint("RecyclerView") int position) {
         resetButtonbackground(holder);
         randomCardBackground(holder, position);
-        holder.getTxtQuizQuestino().setText(mQuizName.get(position));
+        holder.getTxtQuizQuestino().setText(mQuizQuestions.get(position).getQuestion());
         holder.getTrueBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "True is Clicked", Toast.LENGTH_SHORT).show();
+                if(mQuizQuestions.get(position).isCorrectAnswer()){
+                    holder.getTrueBtn().setBackgroundColor(mContext.getResources().getColor((R.color.corr_ans)));
+                }else {
+                    holder.getTrueBtn().setBackgroundColor(mContext.getResources().getColor((R.color.false_ans)));
+                }
             }
         });
         holder.getFalseBtn().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(mContext, "Flase is clicked", Toast.LENGTH_SHORT).show();
+                if (!mQuizQuestions.get(position).isCorrectAnswer()) {
+                    holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.corr_ans));
+                } else {
+                    holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.false_ans));
+                }
             }
         });
     }
 
     @Override
     public int getItemCount() {
-        return mQuizName.size();
+        return mQuizQuestions.size();
     }
 
     private void randomCardBackground(QuizViewHolder holder, int num){
@@ -73,7 +82,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     }
 
     private void resetButtonbackground( QuizViewHolder holder){
-        holder.getTrueBtn().setBackgroundColor(Color.parseColor("#fb8500"));
-        holder.getFalseBtn().setBackgroundColor(Color.parseColor("#fb8500"));
+        holder.getTrueBtn().setBackgroundColor(Color.parseColor("#2d00f7"));
+        holder.getFalseBtn().setBackgroundColor(Color.parseColor("#2d00f7"));
     }
 }

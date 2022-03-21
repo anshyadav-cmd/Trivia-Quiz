@@ -37,7 +37,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="True" />
 
             <Button
                 android:id="@+id/falsebtn"
@@ -46,7 +46,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="10dp"
                 android:layout_weight="1"
-                android:text="Button" />
+                android:text="False" />
         </LinearLayout>
 
     </LinearLayout>
