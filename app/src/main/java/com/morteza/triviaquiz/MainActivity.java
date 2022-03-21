@@ -34,5 +34,7 @@ public class  MainActivity extends AppCompatActivity {
 
         mQuizManger = new QuizManger(this);
         mQuizManger.getQuizQuestion(this);
+
+
     }
 }

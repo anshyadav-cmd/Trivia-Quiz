@@ -3,12 +3,16 @@ package com.morteza.triviaquiz.controller;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Color;
+import android.os.Build;
+import android.os.VibrationEffect;
+import android.os.Vibrator;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.RequiresApi;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.daimajia.androidanimations.library.Techniques;
@@ -24,6 +28,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     private Context mContext;
     private List<QuizQuestion> mQuizQuestions;
     private LayoutInflater mLayoutInflater;
+    private final Vibrator mVibrator;
 
     private int colors[] = {R.color.l_ran1, R.color.l_ran2, R.color.l_ran3, R.color.l_ran4,
             R.color.l_rand5, R.color.l_rand6, R.color.l_rand7, R.color.l_rand8,
@@ -35,6 +40,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
         mQuizQuestions = quizName;
         mLayoutInflater = LayoutInflater.from(context);
         mSecureRandom = new SecureRandom();
+        mVibrator = (Vibrator)context.getSystemService(Context.VIBRATOR_SERVICE);
+
     }
 
     @NonNull
@@ -50,6 +57,8 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
         randomCardBackground(holder, position);
         holder.getTxtQuizQuestino().setText(mQuizQuestions.get(position).getQuestion());
         holder.getTrueBtn().setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if(mQuizQuestions.get(position).isCorrectAnswer()){
@@ -60,15 +69,19 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
                             .duration(500)
                             .repeat(0)
                             .playOn(holder.getTrueBtn());
+                    vibrate();
                 }
             }
         });
         holder.getFalseBtn().setOnClickListener(new View.OnClickListener() {
+
+            @RequiresApi(api = Build.VERSION_CODES.O)
             @Override
             public void onClick(View v) {
                 if (!mQuizQuestions.get(position).isCorrectAnswer()) {
                     holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.corr_ans));
                 } else {
+                    vibrate();
                     holder.getFalseBtn().setBackgroundColor(mContext.getResources().getColor(R.color.false_ans));
                     YoYo.with(Techniques.Shake)
                             .duration(500)
@@ -94,5 +107,12 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
     private void resetButtonbackground( QuizViewHolder holder){
         holder.getTrueBtn().setBackgroundColor(Color.parseColor("#2d00f7"));
         holder.getFalseBtn().setBackgroundColor(Color.parseColor("#2d00f7"));
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.O)
+    private void vibrate(){
+        final VibrationEffect vibrationEffect = VibrationEffect.createOneShot(1000,VibrationEffect.DEFAULT_AMPLITUDE);
+        mVibrator.cancel();
+        mVibrator.vibrate(vibrationEffect);
     }
 }
