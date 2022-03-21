@@ -111,7 +111,7 @@ public class CardStackAdapter extends RecyclerView.Adapter<QuizViewHolder> {
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     private void vibrate(){
-        final VibrationEffect vibrationEffect = VibrationEffect.createOneShot(1000,VibrationEffect.DEFAULT_AMPLITUDE);
+        final VibrationEffect vibrationEffect = VibrationEffect.createOneShot(150,VibrationEffect.DEFAULT_AMPLITUDE);
         mVibrator.cancel();
         mVibrator.vibrate(vibrationEffect);
     }
